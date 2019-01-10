@@ -24,7 +24,7 @@
           <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_small-appmsg">
               <div class="weui-cells weui-cells_in-small-appmsg">
-                <li v-bind:key="item" v-for= "item in list" class="weui-cell weui-cell_access" hover-class="weui-cell_active" @click="tabClick(item)">
+                <li v-bind:key="item" v-for= "item in list" class="weui-cell weui-cell_access user" hover-class="weui-cell_active" @click="tabClick(item)">
                   <div class="weui-cell__hd">
                     <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
                   </div>
@@ -131,6 +131,14 @@ export default {
 .searchbar-result {
   margin-top: 0;
   font-size: 14px;
+}
+.user {
+  width: 630rpx;
+  padding: 0px;
+  background-color: #ffffff;
+  box-shadow: 0px 5rpx 30rpx 0px rgba(0,0,80,0.07);
+  border-radius: 16rpx;
+  margin: 5px auto;
 }
 .searchbar-result:before {
   display: none;

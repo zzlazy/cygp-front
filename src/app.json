@@ -11,7 +11,7 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
-    "enablePullDownRefresh": true
+    "enablePullDownRefresh": false
   },
   "tabBar": {
     "borderStyle": "black",
@@ -30,12 +30,6 @@
         "text": "资料共享",
         "iconPath": "static/icon/campus.png",
         "selectedIconPath": "static/icon/campus_selected.png"
-      },
-      {
-        "pagePath": "pages/logs/main",
-        "text": "发现",
-        "iconPath": "static/icon/find.png",
-        "selectedIconPath": "static/icon/find_selected.png"
       },
       {
         "pagePath": "pages/acount/main",

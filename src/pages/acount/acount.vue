@@ -4,30 +4,9 @@
       <div class="avatar-wrapper">
         <open-data class="avatar" type="userAvatarUrl" lang="zh_CN"></open-data>
       </div>
-      <div v-if="!isLogin" class="button">登录</div>
-      <div v-else class="info">
+      <div class="info">
         <div class="name"><open-data type="userNickName" lang="zh_CN"></open-data></div>
-        <div class="student">
-          <image class="image" src="../../static/icon/authentication.png" />
-          <div>{{studentInfo.name}}</div>
-        </div>
       </div>
-    </div>
-    <div class="other">
-      <div v-if="isLogin" class="item">
-        <image class="image" src="../../static/icon/remove_binding.png"/>
-        <div class="info">
-          <div>解除绑定</div>
-          <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
-        </div>
-      </div>
-      <button class="item button">
-        <image class="image" src="../../static/icon/contact.png"/>
-        <div class="info">
-          <div>联系我</div>
-          <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
-        </div>
-      </button>
     </div>
   </div>
 </template>
