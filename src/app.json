@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/share/main",
+    "pages/shareD/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "borderStyle": "black",
+    "color": "#ccc",
+    "selectedColor": "#000",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "text": "首页",
+        "iconPath": "static/icon/home.png",
+        "selectedIconPath": "static/icon/home_selected.png"
+      },
+      {
+        "pagePath": "pages/share/main",
+        "text": "资料共享",
+        "iconPath": "static/icon/campus.png",
+        "selectedIconPath": "static/icon/campus_selected.png"
+      },
+      {
+        "pagePath": "pages/logs/main",
+        "text": "发现",
+        "iconPath": "static/icon/find.png",
+        "selectedIconPath": "static/icon/find_selected.png"
+      },
+      {
+        "pagePath": "pages/logs/main",
+        "text": "我",
+        "iconPath": "static/icon/account.png",
+        "selectedIconPath": "static/icon/account_selected.png"
+      }
+    ]
+  } 
+}
