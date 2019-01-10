@@ -1,0 +1,153 @@
+<template>
+  <div class="account">
+    <div class="user">
+      <div class="avatar-wrapper">
+        <open-data class="avatar" type="userAvatarUrl" lang="zh_CN"></open-data>
+      </div>
+      <div v-if="!isLogin" class="button">登录</div>
+      <div v-else class="info">
+        <div class="name"><open-data type="userNickName" lang="zh_CN"></open-data></div>
+        <div class="student">
+          <image class="image" src="../../static/icon/authentication.png" />
+          <div>{{studentInfo.name}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="other">
+      <div v-if="isLogin" class="item">
+        <image class="image" src="../../static/icon/remove_binding.png"/>
+        <div class="info">
+          <div>解除绑定</div>
+          <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
+        </div>
+      </div>
+      <button class="item button">
+        <image class="image" src="../../static/icon/contact.png"/>
+        <div class="info">
+          <div>联系我</div>
+          <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
+        </div>
+      </button>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+    data(){
+        return {
+            isLogin: false,
+            studentInfo:{
+                name: "猪钟浩"
+            }
+        }
+    }
+}
+</script>
+<style scoped>
+.account {
+  margin-top: 30rpx;
+}
+.user {
+  width: 630rpx;
+  height: 230rpx;
+  background-color: #ffffff;
+  box-shadow: 0px 5rpx 30rpx 0px rgba(0,0,80,0.07);
+  border-radius: 16rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user .avatar {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+}
+.user .avatar-wrapper {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 60rpx;
+}
+.user .button {
+  width: 300rpx;
+  height: 70rpx;
+  background-color: #6dde9e;
+  box-shadow: 0 10rpx 25rpx 0 rgba(109,222,158,0.26);
+  border-radius: 34rpx;
+  font-size: 26rpx;
+  color: #ffffff;
+  text-align: center;
+  line-height: 70rpx;
+}
+.user .info {
+  width: 280rpx;
+  font-size: 36rpx;
+  line-height: 0px;
+  letter-spacing: 0px;
+  color: #333333;
+}
+.user .info .name {
+  height: 35rpx;
+  line-height: 35rpx;
+}
+.user .info .student {
+  display: flex;
+  align-items: center;
+  margin-top: 38rpx;
+  font-size: 26rpx;
+  color: #cccccc;
+}
+.user .info .student .image {
+  margin-right: 30rpx;
+  width: 106rpx;
+  height: 38rpx;
+}
+.other {
+  margin: 20rpx 0;
+}
+.other .item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.other .item .image {
+  width: 35rpx;
+  height: 35rpx;
+}
+.other .item .info {
+  height: 120rpx;
+  box-sizing: border-box;
+  font-size: 26rpx;
+  margin-left: 8rpx;
+  color: #999999;
+  padding: 40rpx 30rpx 40rpx 20rpx;
+  width: 547rpx;
+  border-bottom: 1rpx solid #eeeeee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  appearance: none;
+  font-smoothing: antialiased;
+  outline: none;
+}
+.button::after {
+  border: none;
+}
+.arrow-right {
+  width: 12rpx;
+  height: 20rpx;
+}
+</style>

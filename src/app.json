@@ -3,7 +3,8 @@
     "pages/index/main",
     "pages/logs/main",
     "pages/share/main",
-    "pages/shareD/main"
+    "pages/shareD/main",
+    "pages/acount/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -37,7 +38,7 @@
         "selectedIconPath": "static/icon/find_selected.png"
       },
       {
-        "pagePath": "pages/logs/main",
+        "pagePath": "pages/acount/main",
         "text": "我",
         "iconPath": "static/icon/account.png",
         "selectedIconPath": "static/icon/account_selected.png"
