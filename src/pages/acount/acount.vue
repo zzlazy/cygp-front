@@ -1,13 +1,34 @@
 <template>
   <div class="account">
     <div class="user">
-      <div class="avatar-wrapper">
-        <open-data class="avatar" type="userAvatarUrl" lang="zh_CN"></open-data>
-      </div>
-      <div class="info">
-        <div class="name"><open-data type="userNickName" lang="zh_CN"></open-data></div>
-      </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                <div class="avatar-wrapper">
+                    <open-data class="avatar" type="userAvatarUrl" lang="zh_CN"></open-data>
+                </div>
+            </div>
+            <div class="weui-cell__bd">
+                <open-data type="userNickName" lang="zh_CN"></open-data>
+                <div style="width:350rpx;font-size: 13px;color: #888888;">内涵人士哈哈哈哈哈哈反倒是看</div>
+            </div>
+        </div>
     </div>
+    <view class="other">
+        <view class="item" @click="tapto()">
+            <image class="image" src="../../static/icon/jibu.png"/>
+            <view class="info">
+            <view>打卡日历</view>
+            <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
+            </view>
+        </view>
+        <button class="item button">
+            <image class="image" src="../../static/icon/jilu.png"/>
+            <view class="info">
+                <view>打卡记录</view>
+                <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
+            </view>
+        </button>
+    </view>
   </div>
 </template>
 <script>
@@ -18,6 +39,13 @@ export default {
             studentInfo:{
                 name: "猪钟浩"
             }
+        }
+    },
+    methods: {
+        tapto(){
+            wx.navigateTo({
+                url: '../calendar/main'
+            })
         }
     }
 }

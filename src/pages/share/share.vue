@@ -26,7 +26,7 @@
               <div class="weui-cells weui-cells_in-small-appmsg">
                 <li v-bind:key="item" v-for= "item in list" class="weui-cell weui-cell_access user" hover-class="weui-cell_active" @click="tabClick(item)">
                   <div class="weui-cell__hd">
-                    <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+                    <!-- <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" /> -->
                   </div>
                   <div class="weui-cell__bd weui-cell_primary">
                     <div>{{item.title}}</div>

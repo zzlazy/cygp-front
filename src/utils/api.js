@@ -5,6 +5,7 @@ module.exports = {
     api: {
         getAll: '/api/share/getAll',
         getDetail: '/api/share/getDetail',
-        weibo: '/api/share/getweibo'
+        weibo: '/api/share/getweibo',
+        tiaoji: '/api/share/getTj'
     }
 }
