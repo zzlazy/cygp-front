@@ -15,11 +15,21 @@
         </div>
       </swiper>
     </div>
-    <div class="page__bd page__bd_spacing">
-      
-    </div>
+       <view class="modules">
+          <block class="module" v-for="item in modules" v-bind:key="item">
+            <div >
+              <view class="module">
+                <image class="modules__image" :src="item.image"/>
+                <text>{{item.text}}</text>
+              </view>
+            </div>
+          </block>
+        </view>
     <div class="button_wrap">
-      <img class="button" :src="btname" alt="">
+      <img class="button" :src="btname" alt="" @click="dkcli()">
+    </div>
+    <div class="btnam_wrap">
+        {{btn_name}}
     </div>
     <div class="button_wrap">
       <div class="dktime">
@@ -38,14 +48,19 @@ import { host, api } from '@/utils/api'
 import Calendar from '@/components/calendar/calendar'
 import naozhong from "../../../static/icon/naozhong.png" 
 import naozhongdis from "../../../static/icon/naozhong_disab.png"
+import menu1 from "../../../static/icon/guankan.png"
+import menu2 from "../../../static/icon/yunpan.png"
+import menu3 from "../../../static/icon/fenxiang.png"
 import '@/components/calendar/style.css'
 export default {
   data () {
     return {
       earlysa: 5,
       earlyso: 8,
-      lastsa: 22,
-      lastso: 3, 
+      earlyready:false,
+      lastsa: 18,
+      lastso: 3,
+      lastready:false, 
       info:[],
       hitokoto:{},
       indicatorDots: false,
@@ -57,7 +72,20 @@ export default {
         'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
         'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
         'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-      ]
+      ],
+      modules: [{
+        image: menu1,
+        text: '足迹',
+        url: './course',
+      }, {
+        image: menu2,
+        text: '记录',
+        url: './grade',
+      }, {
+        image: menu3,
+        text: '分享',
+        url: './grade',
+      }]
     }
   },
   computed: {
@@ -67,22 +95,37 @@ export default {
       return hourn
     },
     disab(){
-      if(this.hours>this.earlysa && this.hours < this.earlyso){
+      if(this.hours>this.earlysa && this.hours < this.earlyso && !this.earlyready){
         return false
       }
-      if(this.hours>this.lastsa && this.hours < this.lastso){
+      if(this.hours>this.lastsa && !this.lastready || this.hours < this.lastso && !this.lastready){
         return true
       }
       return false
     },
     btname(){
-      if(this.hours>this.earlysa && this.hours < this.earlyso){
+      if(this.hours>this.earlysa && this.hours < this.earlyso && !this.earlyready){
         return naozhong
       }
-      if(this.hours>this.lastsa && this.hours < this.lastso){
+      if(this.hours>this.lastsa && !this.lastready || this.hours < this.lastso && !this.lastready){
         return naozhong
       }
       return naozhongdis
+    },
+    btn_name(){
+      if(this.hours>this.earlysa && this.hours < this.earlyso && !this.earlyready){
+        return "早安打卡"
+      }
+      if(this.hours>this.lastsa && !this.lastready || this.hours < this.lastso && !this.lastready){
+        return "晚安打卡"
+      }
+      if(this.hours>this.earlysa && this.hours < this.earlyso && this.earlyready){
+        return "打卡完成"
+      }
+      if(this.hours>this.lastsa && this.lastready || this.hours < this.lastso && this.lastready){
+        return "打卡完成"
+      }
+      return "暂时不能打卡"
     }
   },
   mounted(){
@@ -97,11 +140,33 @@ export default {
         that.info = res.data
       })
     },
+    dkcli(){
+      console.log("htll")
+      const that = this
+      wx.showToast({
+        title: '打卡成功',
+        icon: 'success',
+        duration: 1000,
+        mask: true,
+        success:(res) => {
+          if(that.hours>that.earlysa && that.hours < that.earlyso && !that.earlyready){
+            that.earlyready = true;
+          }
+          if(that.hours>that.lastsa && !that.lastready || that.hours < that.lastso && !that.lastready){
+            that.lastready = true;
+          }
+        }
+      });
+      
+    }
   }
 }
 </script>
 
 <style scoped>
+.slide-image {
+  width: 100%;
+}
 .user {
   width: 630rpx;
   background-color: #ffffff;
@@ -134,6 +199,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 45rpx;
+}
+.btnam_wrap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .button{
   width:200rpx;
@@ -159,4 +230,28 @@ export default {
   font-size: 12px;
 
 }
+
+.modules {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top:50rpx;
+}
+.modules .module {
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.modules .module--disable {
+  opacity: .3;
+}
+.modules .modules__image {
+  width: 40px;
+  height: 40px;
+}
+
+
 </style>
