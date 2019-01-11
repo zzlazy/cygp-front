@@ -9,7 +9,7 @@
             </div>
             <div class="weui-cell__bd">
                 <open-data type="userNickName" lang="zh_CN"></open-data>
-                <div style="width:350rpx;font-size: 13px;color: #888888;">内涵人士哈哈哈哈哈哈反倒是看</div>
+                <div style="width:350rpx;font-size: 13px;color: #888888;">{{hitokoto.hitokoto}}</div>
             </div>
         </div>
     </div>
@@ -32,20 +32,35 @@
   </div>
 </template>
 <script>
+import { request } from '@/utils/index'
+import { host, api } from '@/utils/api'
 export default {
     data(){
         return {
+            hitokoto:{},
             isLogin: false,
             studentInfo:{
                 name: "猪钟浩"
             }
         }
     },
+    mounted(){
+      this.getonesay()
+    },
     methods: {
         tapto(){
             wx.navigateTo({
                 url: '../calendar/main'
             })
+        },
+        getonesay(){
+          const that = this;
+          request({
+            url: `${host}${api.onesay}`
+          }).then((res) => {
+            that.hitokoto = res.data;
+            console.log(res.data)
+          })
         }
     }
 }

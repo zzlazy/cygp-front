@@ -1,29 +1,11 @@
 <template>
   <div class="page">
-    <div class="page__bd page__bd_spacing">
-      <swiper :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
-        <div v-bind:key ="items" v-for="items in info">
-          <swiper-item>
-            <div class="weui-media-box weui-media-box_text user">
-            <div class="weui-media-box__title weui-media-box__title_in-text name">{{items.name}}</div>
-            <div class="weui-media-box__desc slid-img">{{items.title}}</div>
-            <div class="weui-media-box__info">
-              <div class="weui-media-box__info__meta">{{items.pubDate}}</div>
-            </div>
-          </div>
-          </swiper-item>
-        </div>
-      </swiper>
-    </div>
     <div class="weui-panel">
         <div class="weui-panel__hd">调剂信息</div>
         <div class="weui-panel__bd">
           <div class="weui-media-box weui-media-box_small-appmsg">
               <div class="weui-cells weui-cells_in-small-appmsg">
                 <li v-bind:key="item" v-for= "item in tjlist" class="weui-cell weui-cell_access user" hover-class="weui-cell_active" @click="tabClick(item)">
-                  <div class="weui-cell__hd">
-                    <!-- <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" /> -->
-                  </div>
                   <div class="weui-cell__bd weui-cell_primary">
                     <div>{{item.title}}</div>
                   </div>
@@ -41,28 +23,16 @@ import { host, api } from '@/utils/api'
 export default {
   data () {
     return {
-      info:[],
       page: 1,
       itemList:['复制', '分享'],
-      tjlist:[],
-      indicatorDots: false,
-      autoplay: true,
-      interval: 5000,
-      duration: 900,
-      circular: true,
+      tjlist:[]
     }
   },
   computed: {
     
   },
   mounted(){
-    const  that = this;
     this.getTj()
-    request({
-        url: `${host}${api.weibo}/2568663307`
-      }).then((res) => {
-        that.info = res.data
-      })
   },
   onReachBottom() {
     console.log("上拉加载")
@@ -76,6 +46,9 @@ export default {
       this.getTj()
     },
     getTj(){
+      wx.showLoading({
+        title: '加载中',
+      })
       const that = this;
       request({
         url: `${host}${api.tiaoji}/?page=${that.page}`
@@ -98,12 +71,6 @@ export default {
         }
         wx.hideLoading()
       })
-    },
-    swiperChange(e) {
-      console.log('第' + e.mp.detail.current + '张轮播图发生了滑动');
-    },
-    animationfinish(e) {
-      console.log('第' + e.mp.detail.current + '张轮播图滑动结束');
     }
   }
 }
