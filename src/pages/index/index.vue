@@ -17,12 +17,12 @@
     </div>
        <view class="modules">
           <block class="module" v-for="item in modules" v-bind:key="item">
-            <div >
+            <navigator :url="item.url">
               <view class="module">
                 <image class="modules__image" :src="item.image"/>
                 <text>{{item.text}}</text>
               </view>
-            </div>
+            </navigator>
           </block>
         </view>
     <div class="button_wrap">
@@ -48,8 +48,8 @@ import { host, api } from '@/utils/api'
 import Calendar from '@/components/calendar/calendar'
 import naozhong from "../../../static/icon/naozhong.png" 
 import naozhongdis from "../../../static/icon/naozhong_disab.png"
-import menu1 from "../../../static/icon/guankan.png"
-import menu2 from "../../../static/icon/yunpan.png"
+import menu1 from "../../../static/icon/zuji.png"
+import menu2 from "../../../static/icon/xinyuandan.png"
 import menu3 from "../../../static/icon/fenxiang.png"
 import '@/components/calendar/style.css'
 export default {
@@ -58,7 +58,7 @@ export default {
       earlysa: 5,
       earlyso: 8,
       earlyready:false,
-      lastsa: 18,
+      lastsa: 22,
       lastso: 3,
       lastready:false, 
       info:[],
@@ -76,15 +76,15 @@ export default {
       modules: [{
         image: menu1,
         text: '足迹',
-        url: './course',
+        url: '../calendar/main',
       }, {
         image: menu2,
-        text: '记录',
-        url: './grade',
+        text: '心语',
+        url: '../calendar/main',
       }, {
         image: menu3,
         text: '分享',
-        url: './grade',
+        url: '../calendar/main',
       }]
     }
   },
@@ -141,23 +141,46 @@ export default {
       })
     },
     dkcli(){
-      console.log("htll")
       const that = this
-      wx.showToast({
-        title: '打卡成功',
-        icon: 'success',
-        duration: 1000,
-        mask: true,
-        success:(res) => {
-          if(that.hours>that.earlysa && that.hours < that.earlyso && !that.earlyready){
-            that.earlyready = true;
+      if(this.disab){
+        wx.showToast({
+          title: '打卡成功',
+          icon: 'success',
+          duration: 500,
+          mask: true,
+          success:() => {
+            if(that.hours>that.earlysa && that.hours < that.earlyso && !that.earlyready){
+              that.earlyready = true;
+            }
+            if(that.hours>that.lastsa && !that.lastready || that.hours < that.lastso && !that.lastready){
+              that.lastready = true;
+            }
+          },
+          complete: () => {
+            wx.showActionSheet({
+              itemList: ['分享'],
+              success(res) {
+                console.log(res.tapIndex)
+              },
+              fail(res) {
+                console.log(res.errMsg)
+              }
+            })
           }
-          if(that.hours>that.lastsa && !that.lastready || that.hours < that.lastso && !that.lastready){
-            that.lastready = true;
-          }
+        });
+      }else{
+        if(that.earlyready || that.lastready){
+            wx.showActionSheet({
+              itemList: ['分享'],
+              success(res) {
+                console.log(res.tapIndex)
+              },
+              fail(res) {
+                console.log(res.errMsg)
+              }
+            })
         }
-      });
-      
+      }
     }
   }
 }

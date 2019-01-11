@@ -21,13 +21,6 @@
             <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
             </view>
         </view>
-        <button class="item button">
-            <image class="image" src="../../static/icon/jilu.png"/>
-            <view class="info">
-                <view>打卡记录</view>
-                <image class="arrow-right" src="../../static/icon/arrow_right.png"/>
-            </view>
-        </button>
     </view>
   </div>
 </template>
