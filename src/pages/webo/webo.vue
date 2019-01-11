@@ -1,7 +1,6 @@
 <template>
   <div class="page">
     <div class="weui-panel">
-        <div class="weui-panel__hd">调剂信息</div>
         <div class="weui-panel__bd">
           <div class="weui-media-box weui-media-box_small-appmsg">
               <div class="weui-cells weui-cells_in-small-appmsg">
@@ -70,6 +69,12 @@ export default {
           that.tjlist = that.tjlist.concat(res.data)
         }
         wx.hideLoading()
+      })
+    },
+    tabClick(item){
+      console.log(item)
+      wx.navigateTo({
+        url: `../tjdetail/main?tid=${item.tid}&&title=${item.title}`
       })
     }
   }

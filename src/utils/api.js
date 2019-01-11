@@ -7,6 +7,7 @@ module.exports = {
         getDetail: '/api/share/getDetail',
         weibo: '/api/share/getweibo',
         tiaoji: '/api/share/getTj',
+        getTjDetail: '/api/share/getTjDetail',
         onesay: '/api/share/getonesay'
     }
 }

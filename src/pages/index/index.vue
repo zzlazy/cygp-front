@@ -16,14 +16,14 @@
       </swiper>
     </div>
        <view class="modules">
-          <block class="module" v-for="item in modules" v-bind:key="item">
+          <div class="module" v-for="item in modules" v-bind:key="item">
             <navigator :url="item.url">
               <view class="module">
                 <image class="modules__image" :src="item.image"/>
                 <text>{{item.text}}</text>
               </view>
             </navigator>
-          </block>
+          </div>
         </view>
     <div class="button_wrap">
       <img class="button" :src="btname" alt="" @click="dkcli()">
@@ -95,34 +95,34 @@ export default {
       return hourn
     },
     disab(){
-      if(this.hours>this.earlysa && this.hours < this.earlyso && !this.earlyready){
+      if(this.hours>=this.earlysa && this.hours <= this.earlyso && !this.earlyready){
         return false
       }
-      if(this.hours>this.lastsa && !this.lastready || this.hours < this.lastso && !this.lastready){
+      if(this.hours>=this.lastsa && !this.lastready || this.hours <= this.lastso && !this.lastready){
         return true
       }
       return false
     },
     btname(){
-      if(this.hours>this.earlysa && this.hours < this.earlyso && !this.earlyready){
+      if(this.hours>=this.earlysa && this.hours <= this.earlyso && !this.earlyready){
         return naozhong
       }
-      if(this.hours>this.lastsa && !this.lastready || this.hours < this.lastso && !this.lastready){
+      if(this.hours>=this.lastsa && !this.lastready || this.hours <= this.lastso && !this.lastready){
         return naozhong
       }
       return naozhongdis
     },
     btn_name(){
-      if(this.hours>this.earlysa && this.hours < this.earlyso && !this.earlyready){
+      if(this.hours >= this.earlysa && this.hours <= this.earlyso && !this.earlyready){
         return "早安打卡"
       }
-      if(this.hours>this.lastsa && !this.lastready || this.hours < this.lastso && !this.lastready){
+      if(this.hours>=this.lastsa && !this.lastready || this.hours <= this.lastso && !this.lastready){
         return "晚安打卡"
       }
-      if(this.hours>this.earlysa && this.hours < this.earlyso && this.earlyready){
+      if(this.hours>=this.earlysa && this.hours <= this.earlyso && this.earlyready){
         return "打卡完成"
       }
-      if(this.hours>this.lastsa && this.lastready || this.hours < this.lastso && this.lastready){
+      if(this.hours >= this.lastsa && this.lastready || this.hours <= this.lastso && this.lastready){
         return "打卡完成"
       }
       return "暂时不能打卡"
@@ -130,6 +130,7 @@ export default {
   },
   mounted(){
     this.getwb()
+    console.log(this.hours)
   },
   methods: {
     getwb(){
@@ -149,10 +150,10 @@ export default {
           duration: 500,
           mask: true,
           success:() => {
-            if(that.hours>that.earlysa && that.hours < that.earlyso && !that.earlyready){
+            if(that.hours>=that.earlysa && that.hours <= that.earlyso && !that.earlyready){
               that.earlyready = true;
             }
-            if(that.hours>that.lastsa && !that.lastready || that.hours < that.lastso && !that.lastready){
+            if(that.hours>=that.lastsa && !that.lastready || that.hours <= that.lastso && !that.lastready){
               that.lastready = true;
             }
           },

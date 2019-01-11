@@ -20,7 +20,6 @@
           </div>
         </div>
         <div v-show="!inputVal.length">
-          <div class="weui-panel__hd">共享资料合集</div>
           <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_small-appmsg">
               <div class="weui-cells weui-cells_in-small-appmsg">
