@@ -16,7 +16,7 @@
       </swiper>
     </div>
     <div class="page__bd page__bd_spacing">
-       
+      
     </div>
     <div class="button_wrap">
       <img class="button" :src="btname" alt="">

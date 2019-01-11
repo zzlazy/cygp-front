@@ -39,9 +39,6 @@ export default {
         return {
             hitokoto:{},
             isLogin: false,
-            studentInfo:{
-                name: "猪钟浩"
-            }
         }
     },
     mounted(){
