@@ -5,9 +5,8 @@
         <div v-bind:key ="items" v-for="items in info">
           <swiper-item>
             <div class="weui-media-box weui-media-box_text user">
-            <div class="weui-panel__hd name">{{items.name}}</div>
-            <div class="weui-media-box__title weui-media-box__title_in-text"></div>
-            <div class="weui-media-box__desc slid-img" v-html="items.description"></div>
+            <div class="weui-media-box__title weui-media-box__title_in-text name">{{items.name}}</div>
+            <div class="weui-media-box__desc slid-img">{{items.title}}</div>
             <div class="weui-media-box__info">
               <div class="weui-media-box__info__meta">{{items.pubDate}}</div>
             </div>
