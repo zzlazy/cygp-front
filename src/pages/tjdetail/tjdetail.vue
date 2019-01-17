@@ -40,8 +40,7 @@ export default {
 				tid: option.tid
 			}
 		}).then((res) => {
-			console.log(res)
-			that.info = res.data.title
+			that.info = res.data.desc
 		})
   },
   mounted(){

@@ -4,10 +4,12 @@
         <div class="weui-panel__bd">
           <div class="weui-media-box weui-media-box_small-appmsg">
               <div class="weui-cells weui-cells_in-small-appmsg">
-                <li v-bind:key="item" v-for= "item in tjlist" class="weui-cell weui-cell_access user" hover-class="weui-cell_active" @click="tabClick(item)">
-                  <div class="weui-cell__bd weui-cell_primary">
-                    <div>{{item.title}}</div>
-                  </div>
+                <li v-bind:key="items" v-for= "items in info" class="user" hover-class="weui-cell_active" @click="tabClick(items)">
+                  <div class="weui-media-box__title weui-media-box__title_in-text name">{{items.name}}</div>
+                    <div class="weui-media-box__desc slid-img">{{items.title}}</div>
+                    <div class="weui-media-box__info">
+                        <div class="weui-media-box__info__meta">{{items.pubDate}}</div>
+                    </div>
                 </li>
               </div>
             </div>
@@ -23,58 +25,28 @@ export default {
   data () {
     return {
       page: 1,
-      itemList:['复制', '分享'],
-      tjlist:[]
+      info:[]
     }
   },
   computed: {
     
   },
   mounted(){
-    this.getTj()
-  },
-  onReachBottom() {
-    console.log("上拉加载")
-    let that = this;
-    // 上拉获取更多数据
-    this.loadata() 
+    this.getwb()
   },
   methods: {
-    loadata(){
-      this.page ++;
-      this.getTj()
-    },
-    getTj(){
-      wx.showLoading({
-        title: '加载中',
-      })
-      const that = this;
+    getwb(){
+      const  that = this;
       request({
-        url: `${host}${api.tiaoji}/?page=${that.page}`
+        url: `${host}${api.weibo}/2568663307`
       }).then((res) => {
-        if(that.tjlist.length){
-          const lilen = that.tjlist[that.tjlist.length-1].title
-          const relen = res.data[res.data.length-1].title
-          if(lilen == relen){
-            wx.showLoading({
-              title: '已经到达最底部了！',
-            })
-            setTimeout(function () {
-              wx.hideLoading()
-            }, 2000)
-          }else{
-            that.tjlist = that.tjlist.concat(res.data)
-          }
-        }else{
-          that.tjlist = that.tjlist.concat(res.data)
-        }
-        wx.hideLoading()
+        that.info = res.data
       })
     },
     tabClick(item){
       console.log(item)
       wx.navigateTo({
-        url: `../tjdetail/main?tid=${item.tid}&&title=${item.title}`
+        url: `../wbdetail/main?tid=${item._id}`
       })
     }
   }
@@ -89,10 +61,10 @@ export default {
   border-radius: 16rpx;
   margin: 15px auto;
   overflow: hidden;
+  padding:0px 20px;
 }
 .slid-img {
   height: 57rpx;
-  overflow: scroll;
 }
 .name{
   font-weight: 800;

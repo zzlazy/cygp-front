@@ -3,14 +3,14 @@
     <div class="page__bd page__bd_spacing">
       <swiper :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration" :circular="circular">
         <div v-bind:key ="items" v-for="items in info">
-          <swiper-item>
+          <swiper-item @click="wbcli(items)">
             <div class="weui-media-box weui-media-box_text user">
-            <div class="weui-media-box__title weui-media-box__title_in-text name">{{items.name}}</div>
-            <div class="weui-media-box__desc slid-img">{{items.title}}</div>
-            <div class="weui-media-box__info">
-              <div class="weui-media-box__info__meta">{{items.pubDate}}</div>
+              <div class="weui-media-box__title weui-media-box__title_in-text name">{{items.name}}</div>
+              <div class="weui-media-box__desc slid-img">{{items.title}}</div>
+              <div class="weui-media-box__info">
+                <div class="weui-media-box__info__meta">{{items.pubDate}}</div>
+              </div>
             </div>
-          </div>
           </swiper-item>
         </div>
       </swiper>
@@ -24,9 +24,17 @@
               </view>
             </navigator>
           </div>
+          <div class="module">
+            <div>
+              <view class="module" @click="sharecli()">
+                <image class="modules__image" :src="fenx"/>
+                <text>分享</text>
+              </view>
+            </div>
+          </div>
         </view>
     <div class="button_wrap">
-      <img class="button" :src="btname" alt="" @click="dkcli()">
+      <img :class="btncla" :src="btname" alt="" @click="dkcli()">
     </div>
     <div class="btnam_wrap">
         {{btn_name}}
@@ -52,27 +60,24 @@ import menu1 from "../../../static/icon/zuji.png"
 import menu2 from "../../../static/icon/xinyuandan.png"
 import menu3 from "../../../static/icon/fenxiang.png"
 import '@/components/calendar/style.css'
+import { setTimeout } from 'timers';
 export default {
   data () {
     return {
       earlysa: 5,
       earlyso: 8,
       earlyready:false,
-      lastsa: 22,
+      lastsa: 17,
       lastso: 3,
       lastready:false, 
       info:[],
+      fenx:menu3,
       hitokoto:{},
       indicatorDots: false,
       autoplay: true,
       interval: 5000,
       duration: 900,
       circular: true,
-      imgUrls: [
-        'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-      ],
       modules: [{
         image: menu1,
         text: '足迹',
@@ -80,11 +85,7 @@ export default {
       }, {
         image: menu2,
         text: '心语',
-        url: '../calendar/main',
-      }, {
-        image: menu3,
-        text: '分享',
-        url: '../calendar/main',
+        url: '../webo/main',
       }]
     }
   },
@@ -96,7 +97,7 @@ export default {
     },
     disab(){
       if(this.hours>=this.earlysa && this.hours <= this.earlyso && !this.earlyready){
-        return false
+        return true
       }
       if(this.hours>=this.lastsa && !this.lastready || this.hours <= this.lastso && !this.lastready){
         return true
@@ -111,6 +112,15 @@ export default {
         return naozhong
       }
       return naozhongdis
+    },
+    btncla(){
+      if(this.hours>=this.earlysa && this.hours <= this.earlyso && !this.earlyready){
+        return "button"
+      }
+      if(this.hours>=this.lastsa && !this.lastready || this.hours <= this.lastso && !this.lastready){
+        return "button"
+      }
+      return "button active"
     },
     btn_name(){
       if(this.hours >= this.earlysa && this.hours <= this.earlyso && !this.earlyready){
@@ -130,7 +140,6 @@ export default {
   },
   mounted(){
     this.getwb()
-    console.log(this.hours)
   },
   methods: {
     getwb(){
@@ -141,13 +150,55 @@ export default {
         that.info = res.data
       })
     },
+    wbcli(item){
+      console.log(item)
+      wx.navigateTo({
+        url: `../wbdetail/main?tid=${item._id}`
+      })
+    },
+    sharecli(){
+      let reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g
+      wx.showModal({
+        title: '分享提示',
+        content: '您确认将百度云盘的资料分享给大家使用吗？',
+        success(res) {
+          if (res.confirm) {
+            wx.getClipboardData({
+              success(res) {
+                // 分享云盘资料
+                let url = res.data.match(reg)
+                if(url && url[0].indexOf('https://pan.baidu.com')>=0){
+                  wx.showToast({
+                    title: '分享成功',
+                    icon: 'success',
+                    duration: 1000
+                  })
+                }else{
+                  wx.showToast({
+                    title: '分享失败',
+                    icon: 'loading',
+                    duration: 500
+                  })
+                }
+              },
+              fail(res){
+                console.log(res)
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    },
     dkcli(){
       const that = this
+      console.log(this.disab)
       if(this.disab){
         wx.showToast({
           title: '打卡成功',
           icon: 'success',
-          duration: 500,
+          duration: 800,
           mask: true,
           success:() => {
             if(that.hours>=that.earlysa && that.hours <= that.earlyso && !that.earlyready){
@@ -158,15 +209,17 @@ export default {
             }
           },
           complete: () => {
-            wx.showActionSheet({
-              itemList: ['分享'],
-              success(res) {
-                console.log(res.tapIndex)
-              },
-              fail(res) {
-                console.log(res.errMsg)
-              }
-            })
+            setTimeout(()=>{
+              wx.showActionSheet({
+                itemList: ['分享'],
+                success(res) {
+                  console.log(res.tapIndex)
+                },
+                fail(res) {
+                  console.log(res.errMsg)
+                }
+              })
+            },500)
           }
         });
       }else{
@@ -230,18 +283,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.button{
-  width:200rpx;
-  height: 200rpx;
-  position: flex;
-  justify-items: center;
-  align-items: center;
-  align-content: center;
-  margin-top:30rpx;
-  border: 1px solid #cdcdcd;
-  box-shadow: 0px 5rpx 30rpx 0px rgba(0,0,80,0.07);
-  border-radius: 100rpx;
-}
 .btn{
   display: flex;
 }
@@ -276,6 +317,30 @@ export default {
   width: 40px;
   height: 40px;
 }
-
+.button {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: scale(1.25);
+  margin-top: 100rpx;
+  margin-bottom: 20rpx;
+  width: 60px;
+  height: 60px;
+  line-height: 2.6;
+  font-size: 24px;
+  color: #e1dada;
+  text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 100px;
+  text-decoration: none;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f4f4f4), color-stop(100%, #e3e3e3));
+  background-image: -moz-gradient(linear, left top, left bottom, color-stop(0%, #f4f4f4), color-stop(100%, #e3e3e3));
+  -webkit-transition: box-shadow 0.3s ease-in-out,  background-image 0.3s ease-in-out, text-shadow 0.5s linear, color 0.5s linear;
+  -moz-transition: box-shadow 0.3s ease-in-out,  background-image 0.3s ease-in-out, text-shadow 0.5s linear, color 0.5s linear;
+}
+.button.active {
+  color: #00d0b0;
+  text-shadow: 0px 0px 7px #37ffb1;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e3e3e3), color-stop(100%, #f4f4f4));
+  background-image: -moz-gradient(linear, left top, left bottom, color-stop(0%, #e3e3e3), color-stop(100%, #f4f4f4));
+}
 
 </style>

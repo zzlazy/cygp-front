@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/logs/main",
+    "pages/share/main",
+    "pages/shareD/main",
+    "pages/acount/main",
+    "pages/tj/main",
+    "pages/calendar/main",
+    "pages/tjdetail/main",
+    "pages/webo/main",
+    "pages/wbdetail/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "陪你考研",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "borderStyle": "black",
+    "color": "#ccc",
+    "selectedColor": "#000",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "text": "首页",
+        "iconPath": "static/icon/home.png",
+        "selectedIconPath": "static/icon/home_selected.png"
+      },
+      {
+        "pagePath": "pages/share/main",
+        "text": "资料",
+        "iconPath": "static/icon/compus.png",
+        "selectedIconPath": "static/icon/compus_selected.png"
+      },
+      {
+        "pagePath": "pages/tj/main",
+        "text": "信息",
+        "iconPath": "static/icon/banjiquan.png",
+        "selectedIconPath": "static/icon/banjiquan_selected.png"
+      },
+      {
+        "pagePath": "pages/acount/main",
+        "text": "我",
+        "iconPath": "static/icon/account.png",
+        "selectedIconPath": "static/icon/account_selected.png"
+      }
+    ]
+  } 
+}

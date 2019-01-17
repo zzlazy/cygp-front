@@ -19,13 +19,12 @@
             <div class="weui-search-bar__cancel-btn" :hidden="!inputShowed" @click="hideInput">取消</div>
           </div>
         </div>
-        <div v-show="!inputVal.length">
+        <div>
           <div class="weui-panel__bd">
             <div class="weui-media-box weui-media-box_small-appmsg">
               <div class="weui-cells weui-cells_in-small-appmsg">
                 <li v-bind:key="item" v-for= "item in list" class="weui-cell weui-cell_access user" hover-class="weui-cell_active" @click="tabClick(item)">
                   <div class="weui-cell__hd">
-                    <!-- <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" /> -->
                   </div>
                   <div class="weui-cell__bd weui-cell_primary">
                     <div>{{item.title}}</div>
@@ -47,6 +46,7 @@ export default {
     return {
       page:1,
       list:[],
+      maxpage: 100,
       inputShowed: false,
       inputVal: ""
     }
@@ -64,15 +64,25 @@ export default {
     console.log("上拉加载")
     let that = this;
     // 上拉获取更多数据
-    this.loadata() 
+    this.loadata(this.inputVal) 
   },
   mounted(){
     this.getdata(this.page)
   },
   methods: {
-    loadata(){
-      this.page++;
-      this.getdata(this.page)
+    loadata(inval){
+      if(!inval){
+        if(this.page != this.maxpage){
+          this.page++;
+          this.getdata(this.page)
+        }else{
+          wx.showToast({
+            title: '暂无更多数据',
+            icon: 'loading',
+            duration: 800
+          })
+        }
+      }
     },
     getdata(page){
       wx.showLoading({
@@ -85,12 +95,12 @@ export default {
       }).then((res) => {
         let data = res.data
         if(that.list.length){
-          const lilen = that.list[that.list.length-1].tid
-          const relen = data[data.length-1].tid
-          if(lilen == relen){
+          if(data.length == 0){
             wx.showLoading({
               title: '已经到达最底部了！',
             })
+            console.log('到底部啦')
+            that.maxpage = that.page
             setTimeout(function () {
               wx.hideLoading()
             }, 2000)
@@ -114,13 +124,29 @@ export default {
     hideInput() {
       this.inputVal = '';
       this.inputShowed = false
+      this.page = 1
+      this.list = []
+      this.getdata(this.page)
     },
     clearInput() {
       this.inputVal = '';
+      this.page = 1
+      this.list = []
+      this.getdata(this.page)
     },
     inputTyping(e) {
-      console.log(e);
-      this.inputVal = e.mp.detail.value
+      const that = this;
+      that.inputVal = e.mp.detail.value
+      that.page = 1
+      request({
+        url: `${host}${api.searchD}`,
+        data:{
+          key: that.inputVal,
+          page: that.page
+        }
+      }).then((res) => {
+        that.list = res.data
+      })
     }
   }
 }
